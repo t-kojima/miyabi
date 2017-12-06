@@ -6,11 +6,13 @@ class String
   end
 
   def to_kana
-    self.tr('ぁ-ん','ァ-ン')
+    s = include_kanji? ? to_kanhira : self
+    s.tr('ぁ-ん','ァ-ン')
   end
 
   def to_hira
-    self.tr('ァ-ン','ぁ-ん')
+    s = include_kanji? ? to_kanhira : self
+    s.tr('ァ-ン','ぁ-ん')
   end
 
   def to_roman
@@ -19,6 +21,10 @@ class String
   end
 
   private
+  def include_kanji?
+    self =~ /[一-龥]/
+  end
+
   def kana_roman
     {
       'ア' => 'a',
